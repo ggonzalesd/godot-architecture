@@ -207,6 +207,12 @@ public partial class BaseContainer : Node
     PlayerBinding = binding;
   }
 
+  public void SetInventory(InventoryState inv)
+  {
+    Inventory = inv;
+    OnCoinsChanged?.Invoke(Inventory.Coins);
+  }
+
   public void TryDamagePlayer(int amount)
   {
     if (PowerUp.HasShield && amount > 0)
