@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://Scripts/Menus/PlayLoopNode.cs" id="31_playloop"]
 [ext_resource type="PackedScene" uid="uid://bpausemenu0001" path="res://scenes/ui/pause_menu.tscn" id="32_pause"]
 [ext_resource type="PackedScene" uid="uid://bgameover00001" path="res://scenes/ui/game_over_menu.tscn" id="33_gameover"]
+[ext_resource type="PackedScene" uid="uid://bparalaxbg001" path="res://scenes/parallax.tscn" id="40_parallax"]
 
 
 
@@ -96,6 +97,8 @@ BulletRatio = 8.0
 position_smoothing_enabled = true
 
 [node name="Hud" parent="." instance=ExtResource("30_hud")]
+
+[node name="Parallax" parent="." instance=ExtResource("40_parallax")]
 
 [node name="PlayLoop" type="Node" parent="."]
 script = ExtResource("31_playloop")
