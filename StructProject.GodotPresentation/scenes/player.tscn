@@ -1,10 +1,27 @@
 [gd_scene format=3 uid="uid://bid182n8arlss"]
 
 [ext_resource type="Script" uid="uid://fouf15cijss6" path="res://Scripts/Entities/Player.cs" id="1_3vyb7"]
-[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://cm1q7cbw886cy" path="res://assets/player-body.svg" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://b2blgjdf1nd38" path="res://assets/player-cannon.svg" id="3_qhqgy"]
 
-[node name="Player" type="Node2D" unique_id=186498483]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
+radius = 24.0
+
+[node name="Player" type="RigidBody2D" unique_id=606596164 node_paths=PackedStringArray("CannotPivot")]
 script = ExtResource("1_3vyb7")
+CannotPivot = NodePath("CannonPivot")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1471218430]
+[node name="Body" type="Sprite2D" parent="." unique_id=1471218430]
+position = Vector2(-1.9073486e-06, -1.4210855e-14)
+scale = Vector2(0.09765626, 0.09765626)
 texture = ExtResource("2_g2els")
+
+[node name="CannonPivot" type="Node2D" parent="." unique_id=2081872086]
+
+[node name="Cannon" type="Sprite2D" parent="CannonPivot" unique_id=1870168029]
+position = Vector2(15.999992, -2.3841858e-07)
+scale = Vector2(0.06759835, 0.06759835)
+texture = ExtResource("3_qhqgy")
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=947503598]
+shape = SubResource("CircleShape2D_g2els")

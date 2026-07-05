@@ -7,8 +7,14 @@ using CorePosition = StructProject.Core.Entities.Models.Position;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
 
-public partial class Player : Node2D
+public partial class Player : RigidBody2D
 {
+  [Export]
+  private Node2D CannotPivot { get; set; } = null!;
+
+  [Export]
+  private float speed = 100f;
+
   private readonly CorePlayer _player;
   private PlayerLoopLogic _playerLoopLogic = null!;
 
@@ -37,6 +43,8 @@ public partial class Player : Node2D
   public override void _Process(double delta)
   {
     _playerLoopLogic.Update();
+
+    CannotPivot.Rotate(Mathf.DegToRad(speed * (float)delta));
 
     _player.Position = new CorePosition(Position.X, Position.Y);
     Position = new Vector2(_player.Position.X, _player.Position.Y);

@@ -2,8 +2,27 @@
 
 [ext_resource type="PackedScene" uid="uid://bid182n8arlss" path="res://scenes/player.tscn" id="1_o5qli"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
+size = Vector2(741, 20)
+
 [node name="Node2D" type="Node2D" unique_id=983973646]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=137459988]
 
 [node name="Player" parent="." unique_id=186498483 instance=ExtResource("1_o5qli")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1936585105]
+position = Vector2(-4, 315)
+physics_material_override = SubResource("PhysicsMaterial_o5qli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1849710021]
+position = Vector2(2, 8)
+shape = SubResource("RectangleShape2D_o5qli")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=149778505]
+offset_left = -367.0
+offset_top = -5.0
+offset_right = 376.0
+offset_bottom = 35.0
