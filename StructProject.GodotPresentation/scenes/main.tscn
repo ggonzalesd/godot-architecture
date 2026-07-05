@@ -21,6 +21,11 @@
 [ext_resource type="Resource" path="res://data/skills/bomb.tres" id="21_bomb"]
 [ext_resource type="Resource" path="res://data/skills/slow.tres" id="22_slow"]
 [ext_resource type="PackedScene" uid="uid://bhudlayer0001" path="res://scenes/ui/hud.tscn" id="30_hud"]
+[ext_resource type="Script" path="res://Scripts/Menus/PlayLoopNode.cs" id="31_playloop"]
+[ext_resource type="PackedScene" uid="uid://bpausemenu0001" path="res://scenes/ui/pause_menu.tscn" id="32_pause"]
+[ext_resource type="PackedScene" uid="uid://bgameover00001" path="res://scenes/ui/game_over_menu.tscn" id="33_gameover"]
+
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(2400, 60)
@@ -90,6 +95,10 @@ BulletRatio = 8.0
 [node name="Camera" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
 
-[node name="Hud" parent="." instance=ExtResource("30_hud")] 
+[node name="Hud" parent="." instance=ExtResource("30_hud")]
 
+[node name="PlayLoop" type="Node" parent="."]
+script = ExtResource("31_playloop")
+PauseScene = ExtResource("32_pause")
+GameOverScene = ExtResource("33_gameover")
 
