@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bdtfymrwpt6pa"]
+
+[ext_resource type="Texture2D" uid="uid://b2blgjdf1nd38" path="res://assets/player-cannon.svg" id="1_mkf8s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkf8s"]
+radius = 8.0
+
+[node name="Bullet" type="RigidBody2D" unique_id=632499341]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1600593184]
+modulate = Color(1, 1, 0.37254903, 1)
+position = Vector2(-8, 0)
+scale = Vector2(0.078125015, 0.078125015)
+texture = ExtResource("1_mkf8s")
+
+[node name="Collider" type="CollisionShape2D" parent="." unique_id=1048862051]
+shape = SubResource("CircleShape2D_mkf8s")

@@ -12,7 +12,8 @@ public partial class BaseContainer : Node
 {
   public ILogger Logger { get; private set; } = null!;
   public IInputActions Inputs { get; private set; } = null!;
-  public PlayerLoopLogic PlayerLoopLogic { get; private set; } = null!;
+  public PlayerBodyLogic PlayerBodyLogic { get; private set; } = null!;
+  public ShootingLogic Shooting { get; private set; } = null!;
   public IDbContextFactory<GameDbContext> DbContextFactory { get; private set; } = null!;
 
   private static BaseContainer? _instance;
@@ -37,7 +38,11 @@ public partial class BaseContainer : Node
       viewport: GetViewport()
     );
 
-    PlayerLoopLogic = new PlayerLoopLogic(
+    PlayerBodyLogic = new PlayerBodyLogic(
+      Inputs: Inputs
+    );
+
+    Shooting = new ShootingLogic(
       Inputs: Inputs,
       Logger: Logger
     );

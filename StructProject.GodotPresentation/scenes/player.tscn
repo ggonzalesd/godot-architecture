@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bid182n8arlss"]
 
 [ext_resource type="Script" uid="uid://fouf15cijss6" path="res://Scripts/Entities/Player.cs" id="1_3vyb7"]
+[ext_resource type="PackedScene" uid="uid://bdtfymrwpt6pa" path="res://scenes/bullet.tscn" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://cm1q7cbw886cy" path="res://assets/player-body.svg" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://b2blgjdf1nd38" path="res://assets/player-cannon.svg" id="3_qhqgy"]
 
@@ -10,11 +11,13 @@ friction = 0.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 24.0
 
-[node name="Player" type="RigidBody2D" unique_id=606596164 node_paths=PackedStringArray("CannotPivot")]
+[node name="Player" type="RigidBody2D" unique_id=606596164 node_paths=PackedStringArray("CannotPivot", "SpawnPoint")]
 physics_material_override = SubResource("PhysicsMaterial_qhqgy")
 lock_rotation = true
 script = ExtResource("1_3vyb7")
 CannotPivot = NodePath("CannonPivot")
+SpawnPoint = NodePath("CannonPivot/SpawnPoint")
+BulletScene = ExtResource("2_dqkch")
 
 [node name="Body" type="Sprite2D" parent="." unique_id=1471218430]
 position = Vector2(-1.9073486e-06, -1.4210855e-14)
@@ -27,6 +30,9 @@ texture = ExtResource("2_g2els")
 position = Vector2(15.999992, -2.3841858e-07)
 scale = Vector2(0.06759835, 0.06759835)
 texture = ExtResource("3_qhqgy")
+
+[node name="SpawnPoint" type="Node2D" parent="CannonPivot" unique_id=1867882907]
+position = Vector2(32, 0)
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=947503598]
 shape = SubResource("CircleShape2D_g2els")

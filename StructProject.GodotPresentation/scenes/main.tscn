@@ -11,7 +11,7 @@ size = Vector2(741, 20)
 
 [node name="Player" parent="." unique_id=186498483 instance=ExtResource("1_o5qli")]
 
-[node name="Player#Camera2D" type="Camera2D" parent="Player" unique_id=137459988]
+[node name="Camera" type="Camera2D" parent="Player" unique_id=137459988]
 position_smoothing_enabled = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1936585105]
