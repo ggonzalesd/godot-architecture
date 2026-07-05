@@ -51,6 +51,7 @@ public partial class BaseContainer : Node
   public IInputActions Inputs { get; private set; } = null!;
   public IScoreService Score { get; } = new ScoreService();
   public PersistenceService Persistence { get; private set; } = null!;
+  public StructProject.GodotPresentation.Scripts.Cheats.CheatService Cheats { get; } = new();
 
   public IBulletSpawn BulletSpawn { get; private set; } = null!;
   public IBulletSpawn EnemyBulletSpawn { get; private set; } = null!;
@@ -96,6 +97,28 @@ public partial class BaseContainer : Node
     _instance = this;
 
     Logger = new GodotLoggerAdapter();
+
+    string[] cliArgs;
+    try { cliArgs = OS.GetCmdlineUserArgs(); } catch { cliArgs = []; }
+    if (cliArgs == null || cliArgs.Length == 0)
+    {
+      try { cliArgs = OS.GetCmdlineArgs(); } catch { cliArgs = []; }
+    }
+    if (cliArgs != null && cliArgs.Length > 0)
+    {
+      Logger.Log("CLI args", string.Join(",", cliArgs));
+      var parser = new StructProject.Infrastructure.Cheats.CheatParser();
+      var cmds = parser.Parse(cliArgs);
+      Logger.Log("Cheats parsed", cmds.Count);
+      if (cmds.Count > 0) Cheats.Apply(cmds, this);
+    }
+    if (cliArgs.Length > 0)
+    {
+      var parser = new StructProject.Infrastructure.Cheats.CheatParser();
+      var cmds = parser.Parse(cliArgs);
+      Logger.Log("Cheats parsed", cmds.Count);
+      if (cmds.Count > 0) Cheats.Apply(cmds, this);
+    }
     Inputs = new GodotInputActionsAdapter(GetViewport());
     PlayerLogic = new PlayerStateLogic();
 
