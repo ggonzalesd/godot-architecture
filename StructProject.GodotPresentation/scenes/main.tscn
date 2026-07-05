@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://155xx7s6y6ta"]
 
+[ext_resource type="Script" uid="uid://dtbeknq8j8khg" path="res://Scripts/Containers/BaseContainer.cs" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bid182n8arlss" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://bdtfymrwpt6pa" path="res://scenes/bullet.tscn" id="2_sugp2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
 
@@ -8,9 +10,12 @@
 size = Vector2(741, 20)
 
 [node name="Main" type="Node2D" unique_id=983973646]
+script = ExtResource("1_0wfyh")
+BulletScene = ExtResource("2_sugp2")
 
 [node name="Player" parent="." unique_id=186498483 instance=ExtResource("1_o5qli")]
 BulletSpeed = 900.0
+BulletRatio = 29.535
 
 [node name="Camera" type="Camera2D" parent="Player" unique_id=137459988]
 position_smoothing_enabled = true

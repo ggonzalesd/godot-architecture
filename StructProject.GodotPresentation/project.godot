@@ -23,10 +23,6 @@ project/assembly_name="StructProject"
 
 enabled=PackedStringArray("res://addons/MyPlugin/plugin.cfg", "res://addons/mygdplugin/plugin.cfg")
 
-[autoload]
-
-BaseContainer="*res://Scripts/Containers/BaseContainer.cs"
-
 [input]
 
 move_forward={

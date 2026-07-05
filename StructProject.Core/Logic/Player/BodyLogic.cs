@@ -8,7 +8,7 @@ public class BodyLogic(
   IInputActions Inputs
 )
 {
-  public void Update(double delta, Body body, Binding binding)
+  public void Update(double delta, Body body, IBinding binding)
   {
     if (Inputs.MovementPressed)
     {

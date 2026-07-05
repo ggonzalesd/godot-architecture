@@ -4,7 +4,7 @@ using StructProject.Core.Shared.Models;
 
 namespace StructProject.GodotPresentation.Scripts.Adapters.Players;
 
-public class GodotPlayerBinding(RigidBody2D rigidBody, Node2D spawnPoint) : Binding
+public class GodotPlayerBinding(RigidBody2D rigidBody, Node2D spawnPoint) : IBinding
 {
   public void ApplyForce(Vec2 force)
   {

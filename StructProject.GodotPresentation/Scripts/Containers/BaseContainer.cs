@@ -1,19 +1,29 @@
 using Godot;
 using Microsoft.EntityFrameworkCore;
 using StructProject.Core.Logic.Player;
+using StructProject.Core.Logic.Spawn;
 using StructProject.Core.Shared.Service;
 using StructProject.Database.Context;
 using StructProject.Database.Persistence;
 using StructProject.GodotPresentation.Scripts.Adapters;
+using StructProject.GodotPresentation.Scripts.Adapters.Spawn;
 
 namespace StructProject.GodotPresentation.Scripts.Containers;
 
+[GlobalClass]
 public partial class BaseContainer : Node
 {
+  [Export]
+  public PackedScene BulletScene { get; private set; } = null!;
+
   public ILogger Logger { get; private set; } = null!;
   public IInputActions Inputs { get; private set; } = null!;
+
+  public IBulletSpawn BulletSpawn { get; private set; } = null!;
+
   public BodyLogic PlayerBodyLogic { get; private set; } = null!;
   public ShootingLogic Shooting { get; private set; } = null!;
+
   public IDbContextFactory<GameDbContext> DbContextFactory { get; private set; } = null!;
 
   private static BaseContainer? _instance;
@@ -38,13 +48,19 @@ public partial class BaseContainer : Node
       viewport: GetViewport()
     );
 
+    BulletSpawn = new GodotSpawnBullet(
+      BulletScene: BulletScene,
+      OriginNode: GetTree().CurrentScene
+    );
+
     PlayerBodyLogic = new BodyLogic(
       Inputs: Inputs
     );
 
     Shooting = new ShootingLogic(
       Inputs: Inputs,
-      Logger: Logger
+      Logger: Logger,
+      BulletSpawn: BulletSpawn
     );
 
     var dbPath = ProjectSettings.GlobalizePath("user://game.db");
