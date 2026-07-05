@@ -10,6 +10,7 @@ size = Vector2(741, 20)
 [node name="Main" type="Node2D" unique_id=983973646]
 
 [node name="Player" parent="." unique_id=186498483 instance=ExtResource("1_o5qli")]
+BulletSpeed = 900.0
 
 [node name="Camera" type="Camera2D" parent="Player" unique_id=137459988]
 position_smoothing_enabled = true

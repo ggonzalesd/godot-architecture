@@ -1,14 +1,16 @@
 using Godot;
-using StructProject.Core.Entities.Models;
+using PlayerBody = StructProject.Core.Entities.Player.Body;
+using PlayerShooter = StructProject.Core.Entities.Player.Shooter;
+using PlayerBinding = StructProject.Core.Entities.Player.Binding;
 using StructProject.Core.Shared.Models;
 using StructProject.GodotPresentation.Scripts.Containers;
 using CorePosition = StructProject.Core.Shared.Models.Vec2;
+using StructProject.GodotPresentation.Scripts.Adapters.Players;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
 
 public partial class Player : RigidBody2D
 {
-  private const float BulletSpeed = 600f;
   private const float BulletLifetime = 3f;
 
   [ExportGroup("Inside Nodes")]
@@ -21,48 +23,56 @@ public partial class Player : RigidBody2D
   [Export]
   private PackedScene BulletScene { get; set; } = null!;
 
-  private PlayerBody _body = null!;
-  private PlayerShooter _shooter = null!;
+  private PlayerBody PlayerBody = null!;
+  private PlayerShooter PlayerShooter = null!;
+  private PlayerBinding PlayerBinding = null!;
+
+  [ExportGroup("Player Settings")]
+  [Export]
+  private float BulletSpeed { get; set; } = 600f;
 
   public override void _Ready()
   {
-    _body = new PlayerBody(
-      GetPosition: () => new CorePosition(
-        X: Position.X,
-        Y: Position.Y
-      ),
-      GetVelocity: () => new CorePosition(
-        X: LinearVelocity.X,
-        Y: LinearVelocity.Y
-      ),
-      ApplyForce: (force) => ApplyCentralForce(
-        force: new Vector2(force.X, force.Y)
-      ),
-      ApplyVelocity: (velocity) => LinearVelocity = new Vector2(
-        x: velocity.X,
-        y: velocity.Y
-      )
+    PlayerBinding = new GodotPlayerBinding(
+      rigidBody: this,
+      spawnPoint: SpawnPoint
     );
 
-    _shooter = new PlayerShooter(
-      GetMuzzle: GetMuzzle,
+    PlayerBody = new PlayerBody(
+      Position: new CorePosition(X: GlobalPosition.X, Y: GlobalPosition.Y),
+      Velocity: new CorePosition(X: LinearVelocity.X, Y: LinearVelocity.Y)
+    );
+
+    PlayerShooter = new PlayerShooter(
+      Speed: BulletSpeed,
       SpawnBullet: SpawnBullet
     );
   }
 
   public override void _Process(double delta)
   {
-    var container = BaseContainer.Instance;
+    PlayerBody = PlayerBody with
+    {
+      Position = new CorePosition(X: GlobalPosition.X, Y: GlobalPosition.Y),
+      Velocity = new CorePosition(X: LinearVelocity.X, Y: LinearVelocity.Y)
+    };
 
-    container.PlayerBodyLogic.Update(
+    PlayerShooter = PlayerShooter with
+    {
+      Speed = BulletSpeed
+    };
+
+    BaseContainer.Instance.PlayerBodyLogic.Update(
       delta: delta,
-      body: _body
+      body: PlayerBody,
+      binding: PlayerBinding
     );
 
-    var aim = container.Shooting.Update(
+    var aim = BaseContainer.Instance.Shooting.Update(
       delta: delta,
-      playerPos: _body.GetPosition(),
-      shooter: _shooter
+      body: PlayerBody,
+      shooter: PlayerShooter,
+      binding: PlayerBinding
     );
 
     CannotPivot.Rotation = Mathf.Atan2(aim.Y, aim.X);

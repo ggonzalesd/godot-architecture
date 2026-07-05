@@ -1,8 +1,8 @@
-using StructProject.Core.Entities.Models;
+using StructProject.Core.Entities.Player;
 using StructProject.Core.Shared.Models;
 using StructProject.Core.Shared.Service;
 
-namespace StructProject.Core.Entities.Logic;
+namespace StructProject.Core.Logic.Player;
 
 public class ShootingLogic(
   IInputActions Inputs,
@@ -17,16 +17,16 @@ public class ShootingLogic(
 
   public bool IsReady => _cooldownRemaining <= 0f;
 
-  public Vec2 Update(double delta, Vec2 playerPos, PlayerShooter shooter)
+  public Vec2 Update(double delta, Body body, Shooter shooter, Binding binding)
   {
     _cooldownRemaining = MathF.Max(0f, _cooldownRemaining - (float)delta);
 
-    var aim = ComputeAim(playerPos, Inputs.CursorPosition);
+    var aim = ComputeAim(body.Position, Inputs.CursorPosition);
 
     if (Inputs.ShootPressed && _cooldownRemaining <= 0f)
     {
       _cooldownRemaining = CooldownSeconds;
-      var origin = shooter.GetMuzzle();
+      var origin = binding.GetMuzzle();
       shooter.SpawnBullet(origin, aim);
       ShotsFired++;
       Logger.Log($"Shoot at {origin} dir {aim}");

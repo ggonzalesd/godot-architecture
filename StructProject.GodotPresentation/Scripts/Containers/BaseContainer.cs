@@ -1,6 +1,6 @@
 using Godot;
 using Microsoft.EntityFrameworkCore;
-using StructProject.Core.Entities.Logic;
+using StructProject.Core.Logic.Player;
 using StructProject.Core.Shared.Service;
 using StructProject.Database.Context;
 using StructProject.Database.Persistence;
@@ -12,7 +12,7 @@ public partial class BaseContainer : Node
 {
   public ILogger Logger { get; private set; } = null!;
   public IInputActions Inputs { get; private set; } = null!;
-  public PlayerBodyLogic PlayerBodyLogic { get; private set; } = null!;
+  public BodyLogic PlayerBodyLogic { get; private set; } = null!;
   public ShootingLogic Shooting { get; private set; } = null!;
   public IDbContextFactory<GameDbContext> DbContextFactory { get; private set; } = null!;
 
@@ -38,7 +38,7 @@ public partial class BaseContainer : Node
       viewport: GetViewport()
     );
 
-    PlayerBodyLogic = new PlayerBodyLogic(
+    PlayerBodyLogic = new BodyLogic(
       Inputs: Inputs
     );
 
