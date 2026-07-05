@@ -20,10 +20,10 @@
 [ext_resource type="Resource" path="res://data/skills/dash.tres" id="20_dash"]
 [ext_resource type="Resource" path="res://data/skills/bomb.tres" id="21_bomb"]
 [ext_resource type="Resource" path="res://data/skills/slow.tres" id="22_slow"]
+[ext_resource type="PackedScene" uid="uid://bhudlayer0001" path="res://scenes/ui/hud.tscn" id="30_hud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(2400, 60)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(60, 1200)
 
@@ -89,3 +89,7 @@ BulletRatio = 8.0
 
 [node name="Camera" type="Camera2D" parent="Player"]
 position_smoothing_enabled = true
+
+[node name="Hud" parent="." instance=ExtResource("30_hud")] 
+
+
