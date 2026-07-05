@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StructProject.Core\StructProject.Core.csproj" />
     <ProjectReference Include="..\StructProject.Database\StructProject.Database.csproj" />
+    <ProjectReference Include="..\StructProject.Infrastructure\StructProject.Infrastructure.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>

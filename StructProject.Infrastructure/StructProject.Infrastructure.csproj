@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StructProject.Core\StructProject.Core.csproj" />
+    <ProjectReference Include="..\StructProject.Database\StructProject.Database.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

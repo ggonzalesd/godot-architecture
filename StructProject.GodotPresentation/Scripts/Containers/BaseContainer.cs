@@ -17,6 +17,7 @@ using StructProject.GodotPresentation.Scripts.Adapters;
 using StructProject.GodotPresentation.Scripts.Adapters.Spawn;
 using StructProject.GodotPresentation.Scripts.Data;
 using StructProject.GodotPresentation.Scripts.Entities;
+using StructProject.GodotPresentation.Scripts.Persistence;
 using StructProject.GodotPresentation.Scripts.Registries;
 using EnemyNode = StructProject.GodotPresentation.Scripts.Entities.Enemy;
 
@@ -49,6 +50,7 @@ public partial class BaseContainer : Node
   public ILogger Logger { get; private set; } = null!;
   public IInputActions Inputs { get; private set; } = null!;
   public IScoreService Score { get; } = new ScoreService();
+  public PersistenceService Persistence { get; private set; } = null!;
 
   public IBulletSpawn BulletSpawn { get; private set; } = null!;
   public IBulletSpawn EnemyBulletSpawn { get; private set; } = null!;
@@ -122,11 +124,34 @@ public partial class BaseContainer : Node
 
     var dbPath = ProjectSettings.GlobalizePath("user://game.db");
     DbContextFactory = new GameDbContextFactory(dbPath);
-    using (var ctx = DbContextFactory.CreateDbContext())
+    try
     {
-      ctx.Database.Migrate();
+      using (var ctx = DbContextFactory.CreateDbContext())
+      {
+        ctx.Database.Migrate();
+      }
+    }
+    catch (System.Exception ex)
+    {
+      Logger.Error("Migration failed, falling back to EnsureCreated", ex.Message);
+      using (var ctx = DbContextFactory.CreateDbContext())
+      {
+        ctx.Database.EnsureCreated();
+      }
     }
     Logger.Log($"Database initialized at {dbPath}");
+
+    Persistence = new PersistenceService((StructProject.Database.Persistence.GameDbContextFactory)DbContextFactory);
+
+    WaveController.OnWaveCompleted += idx =>
+    {
+      _ = AutoSaveAsync();
+    };
+
+    OnPlayerDied += () =>
+    {
+      _ = AutoSaveAsync(submit: true);
+    };
 
     Score.OnScoreChanged += s => OnPlayerScoreChanged?.Invoke(s);
 
@@ -273,6 +298,22 @@ public partial class BaseContainer : Node
     }
 
     Logger.Log("Pickup collected", kind);
+  }
+
+  private async System.Threading.Tasks.Task AutoSaveAsync(bool submit = false)
+  {
+    try
+    {
+      if (submit)
+      {
+        await Persistence.SubmitScoreAsync("Player", Score.CurrentScore, WaveController.CurrentWaveIndex + 1);
+      }
+      await Persistence.AutoSaveRunAsync(Score.CurrentScore, WaveController.CurrentWaveIndex + 1, Inventory.Coins);
+    }
+    catch (System.Exception ex)
+    {
+      Logger.Error("AutoSaveAsync failed", ex.Message);
+    }
   }
 
   private void HandleEnemySpawn(EnemySpawnEvent spawnEvent)
