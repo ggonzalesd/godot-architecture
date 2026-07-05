@@ -1,4 +1,4 @@
-namespace StructProject.Core.Entities.Models;
+namespace StructProject.Core.Shared.Models;
 
 public record Position(float X, float Y)
 {
