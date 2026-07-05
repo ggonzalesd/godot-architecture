@@ -3,7 +3,7 @@ using StructProject.Core.Entities.Logic;
 using StructProject.GodotPresentation.Scripts.Containers;
 using StructProject.GodotPresentation.Scripts.Adapters;
 using CorePlayer = StructProject.Core.Entities.Models.Player;
-using CorePosition = StructProject.Core.Shared.Models.Position;
+using CorePosition = StructProject.Core.Shared.Models.Vec2;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
 
@@ -21,12 +21,20 @@ public partial class Player : RigidBody2D
   public override void _Ready()
   {
     _player = new CorePlayer(
-      name: "Player1",
-      level: 1,
-      health: 100,
-      getPosition: () => new CorePosition(
+      GetPosition: () => new CorePosition(
         X: Position.X,
         Y: Position.Y
+      ),
+      GetVelocity: () => new CorePosition(
+        X: LinearVelocity.X,
+        Y: LinearVelocity.Y
+      ),
+      ApplyForce: (force) => ApplyCentralForce(
+        force: new Vector2(force.X, force.Y)
+      ),
+      ApplyVelocity: (velocity) => LinearVelocity = new Vector2(
+        x: velocity.X,
+        y: velocity.Y
       )
     );
 
@@ -39,7 +47,7 @@ public partial class Player : RigidBody2D
 
   public override void _Process(double delta)
   {
-    _playerLoopLogic.Update();
+    _playerLoopLogic.Update(delta);
 
     CannotPivot.Rotate(Mathf.DegToRad(speed * (float)delta));
   }

@@ -1,6 +1,6 @@
 using StructProject.Core.Entities.Models;
 
-namespace StructProject.Core.Repository;
+namespace StructProject.Core.Entities.Repository;
 
 public interface IPlayerRepository
 {
