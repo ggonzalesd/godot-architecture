@@ -10,7 +10,7 @@ size = Vector2(741, 20)
 
 [node name="Main" type="Node2D" unique_id=983973646]
 
-[node name="Node" type="Node" parent="." unique_id=543416581]
+[node name="DI" type="Node" parent="." unique_id=543416581]
 script = ExtResource("1_0wfyh")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=137459988]
