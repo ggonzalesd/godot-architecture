@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/WaveData.cs" id="1_w01"]
+[ext_resource type="Script" path="res://Scripts/Data/EnemySpawnConfig.cs" id="2_w01"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="3_grunt"]
+
+[sub_resource type="Resource" id="Wave01_S1"]
+script = ExtResource("2_w01")
+Enemy = ExtResource("3_grunt")
+Delay = 0.5
+Count = 5
+Interval = 0.8
+LaneY = 400.0
+Direction = -1
+HealthMultiplier = 1.0
+
+[resource]
+script = ExtResource("1_w01")
+DisplayName = "Wave 1 — First Contact"
+DifficultyMultiplier = 1.0
+Duration = 25.0
+Spawns = Array[Resource]([SubResource("Wave01_S1")])
+TimeBeforeNext = 4.0
+metadata/_custom_type_script = "res://Scripts/Data/WaveData.cs"

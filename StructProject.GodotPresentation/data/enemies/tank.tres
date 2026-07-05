@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyKindConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/EnemyKindConfig.cs" id="1_tank"]
+
+[resource]
+script = ExtResource("1_tank")
+Kind = 2
+DisplayName = "Tank"
+MaxHealth = 130
+MoveSpeed = 40.0
+ContactDamage = 22
+ScoreValue = 35
+CoinDrop = 4
+TintColor = Color(0.7, 0.4, 0.3, 1)
+Scale = Vector2(0.13, 0.13)
+Flies = false
+ShootCooldown = 0.0
+ShootSpeed = 0.0
+ShootRange = 0.0
+ShootDamage = 0
+metadata/_custom_type_script = "res://Scripts/Data/EnemyKindConfig.cs"

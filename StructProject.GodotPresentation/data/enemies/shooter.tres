@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyKindConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/EnemyKindConfig.cs" id="1_shooter"]
+
+[resource]
+script = ExtResource("1_shooter")
+Kind = 1
+DisplayName = "Shooter"
+MaxHealth = 45
+MoveSpeed = 60.0
+ContactDamage = 8
+ScoreValue = 18
+CoinDrop = 2
+TintColor = Color(0.7, 0.7, 1, 1)
+Scale = Vector2(0.09, 0.09)
+Flies = false
+ShootCooldown = 1.8
+ShootSpeed = 480.0
+ShootRange = 22.0
+ShootDamage = 8
+metadata/_custom_type_script = "res://Scripts/Data/EnemyKindConfig.cs"

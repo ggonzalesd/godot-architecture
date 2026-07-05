@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/WaveData.cs" id="1_w05"]
+[ext_resource type="Script" path="res://Scripts/Data/EnemySpawnConfig.cs" id="2_w05"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="3_grunt"]
+[ext_resource type="Resource" path="res://data/enemies/flyer.tres" id="4_flyer"]
+[ext_resource type="Resource" path="res://data/enemies/tank.tres" id="5_tank"]
+[ext_resource type="Resource" path="res://data/enemies/shooter.tres" id="6_shooter"]
+
+[sub_resource type="Resource" id="Wave05_T1"]
+script = ExtResource("2_w05")
+Enemy = ExtResource("3_grunt")
+Delay = 0.0
+Count = 6
+Interval = 0.5
+LaneY = 380.0
+Direction = -1
+HealthMultiplier = 1.4
+
+[sub_resource type="Resource" id="Wave05_T2"]
+script = ExtResource("2_w05")
+Enemy = ExtResource("5_tank")
+Delay = 1.0
+Count = 1
+Interval = 1.0
+LaneY = 460.0
+Direction = -1
+HealthMultiplier = 1.0
+
+[sub_resource type="Resource" id="Wave05_T3"]
+script = ExtResource("2_w05")
+Enemy = ExtResource("4_flyer")
+Delay = 5.0
+Count = 4
+Interval = 1.5
+LaneY = 260.0
+Direction = -1
+HealthMultiplier = 1.0
+
+[sub_resource type="Resource" id="Wave05_T4"]
+script = ExtResource("2_w05")
+Enemy = ExtResource("6_shooter")
+Delay = 10.0
+Count = 4
+Interval = 1.8
+LaneY = 360.0
+Direction = -1
+HealthMultiplier = 1.2
+
+[resource]
+script = ExtResource("1_w05")
+DisplayName = "Wave 5 — Gauntlet"
+DifficultyMultiplier = 1.4
+Duration = 50.0
+Spawns = Array[Resource]([SubResource("Wave05_T1"), SubResource("Wave05_T2"), SubResource("Wave05_T3"), SubResource("Wave05_T4")])
+TimeBeforeNext = 6.0
+metadata/_custom_type_script = "res://Scripts/Data/WaveData.cs"

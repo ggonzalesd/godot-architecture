@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyKindConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/EnemyKindConfig.cs" id="1_flyer"]
+
+[resource]
+script = ExtResource("1_flyer")
+Kind = 3
+DisplayName = "Flyer"
+MaxHealth = 50
+MoveSpeed = 110.0
+ContactDamage = 12
+ScoreValue = 22
+CoinDrop = 3
+TintColor = Color(0.5, 1, 0.6, 1)
+Scale = Vector2(0.085, 0.085)
+Flies = true
+ShootCooldown = 2.4
+ShootSpeed = 420.0
+ShootRange = 18.0
+ShootDamage = 6
+metadata/_custom_type_script = "res://Scripts/Data/EnemyKindConfig.cs"

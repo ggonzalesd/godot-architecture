@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="WaveData" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/WaveData.cs" id="1_w03"]
+[ext_resource type="Script" path="res://Scripts/Data/EnemySpawnConfig.cs" id="2_w03"]
+[ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="3_grunt"]
+[ext_resource type="Resource" path="res://data/enemies/shooter.tres" id="4_shooter"]
+
+[sub_resource type="Resource" id="Wave03_S1"]
+script = ExtResource("2_w03")
+Enemy = ExtResource("3_grunt")
+Delay = 0.0
+Count = 6
+Interval = 0.6
+LaneY = 360.0
+Direction = -1
+HealthMultiplier = 1.2
+
+[sub_resource type="Resource" id="Wave03_S2"]
+script = ExtResource("2_w03")
+Enemy = ExtResource("4_shooter")
+Delay = 4.0
+Count = 3
+Interval = 2.0
+LaneY = 400.0
+Direction = -1
+HealthMultiplier = 1.0
+
+[sub_resource type="Resource" id="Wave03_S3"]
+script = ExtResource("2_w03")
+Enemy = ExtResource("4_shooter")
+Delay = 14.0
+Count = 3
+Interval = 2.0
+LaneY = 320.0
+Direction = -1
+HealthMultiplier = 1.0
+
+[resource]
+script = ExtResource("1_w03")
+DisplayName = "Wave 3 — Armed"
+DifficultyMultiplier = 1.2
+Duration = 35.0
+Spawns = Array[Resource]([SubResource("Wave03_S1"), SubResource("Wave03_S2"), SubResource("Wave03_S3")])
+TimeBeforeNext = 5.0
+metadata/_custom_type_script = "res://Scripts/Data/WaveData.cs"
