@@ -4,7 +4,7 @@ using StructProject.Database.Context;
 
 namespace StructProject.Database.DesignTime;
 
-public class GameDbContextFactory : IDesignTimeDbContextFactory<GameDbContext>
+public class GameDbContextDesignTimeFactory : IDesignTimeDbContextFactory<GameDbContext>
 {
   public GameDbContext CreateDbContext(string[] args)
   {

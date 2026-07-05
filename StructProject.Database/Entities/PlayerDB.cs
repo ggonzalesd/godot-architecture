@@ -10,7 +10,7 @@ public class PlayerDB
   [Column("id")]
   [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
   [Required]
-  required public int Id { get; set; }
+  public int Id { get; set; }
 
   [Required]
   [Column("name")]

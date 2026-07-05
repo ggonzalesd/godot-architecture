@@ -18,3 +18,8 @@ export/
 build/
 target/
 
+# Database
+*.db
+*.db-shm
+*.db-wal
+
