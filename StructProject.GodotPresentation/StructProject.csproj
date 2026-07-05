@@ -1,0 +1,11 @@
+<Project Sdk="Godot.NET.Sdk/4.6.1">
+  <ItemGroup>
+    <ProjectReference Include="..\StructProject.Core\StructProject.Core.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>NewGameProject</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

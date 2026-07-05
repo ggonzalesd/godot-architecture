@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://blbv8egi3yw8o"]
+
+[ext_resource type="Script" uid="uid://d1vjaqnb28vcx" path="res://Scripts/Data/WeaponData.cs" id="1_8a8w4"]
+[ext_resource type="PackedScene" uid="uid://155xx7s6y6ta" path="res://scenes/main.tscn" id="1_xyqoo"]
+
+[sub_resource type="Resource" id="Resource_xyqoo"]
+script = ExtResource("1_8a8w4")
+metadata/_custom_type_script = "uid://d1vjaqnb28vcx"
+
+[sub_resource type="Curve" id="Curve_8a8w4"]
+_data = [Vector2(0, 0), 0.0, 1.5080076, 0, 1, Vector2(0.50265956, 0.75801444), -4.0685043, -4.0685043, 0, 0, Vector2(1, 1), 0.48655915, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k2udv"]
+
+[sub_resource type="Curve2D" id="Curve2D_xyqoo"]
+bake_interval = 512.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 1
+
+[resource]
+script = ExtResource("1_8a8w4")
+CustomProperties = Dictionary[String, String]({
+"234": "234234",
+"34": "34"
+})
+BaseWeapon = SubResource("Resource_xyqoo")
+Size = Vector2(1.345, 1)
+Color = Color(0.50175345, 0.18763399, 0.59940916, 1)
+Tags = Array[String](["123", "32", "21"])
+TrajectoryCurve = SubResource("Curve2D_xyqoo")
+DamageFalloffCurve = SubResource("Curve_8a8w4")
+Material = SubResource("ShaderMaterial_k2udv")
+ProjectileScene = ExtResource("1_xyqoo")
+metadata/_custom_type_script = "uid://d1vjaqnb28vcx"

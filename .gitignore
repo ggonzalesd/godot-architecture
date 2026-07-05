@@ -1,0 +1,20 @@
+# Dotnet Ignore
+bin/
+obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Godot Ignore
+export/
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Build
+build/
+target/
+
