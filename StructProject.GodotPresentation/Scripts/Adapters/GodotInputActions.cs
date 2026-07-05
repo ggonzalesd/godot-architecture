@@ -38,8 +38,12 @@ public class GodotInputActionsAdapter(Viewport viewport) : IInputActions
 
       return new Vec2(
         X: axisVector.X,
-        Y: axisVector.Y
+        Y: 0f
       );
     }
   }
+
+  public bool JumpPressed => Input.IsActionJustPressed("jump");
+
+  public bool CrouchPressed => Input.IsActionPressed("crouch");
 }

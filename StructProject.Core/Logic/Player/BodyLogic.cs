@@ -8,29 +8,65 @@ public class BodyLogic(
   IInputActions Inputs
 )
 {
-  public void Update(double delta, Body body, IBinding binding)
+  public const float MoveSpeed = 220f;
+  public const float Acceleration = 1800f;
+  public const float Friction = 1600f;
+  public const float JumpVelocity = -460f;
+  public const float CoyoteTime = 0.12f;
+  public const float JumpBuffer = 0.12f;
+
+  public void Update(double delta, Body body, IBinding binding, JumpState jump)
   {
-    if (Inputs.MovementPressed)
+    var dt = (float)delta;
+    var axisX = Inputs.Axis.X;
+
+    jump.CoyoteRemaining = MathF.Max(0f, jump.CoyoteRemaining - dt);
+    jump.BufferRemaining = MathF.Max(0f, jump.BufferRemaining - dt);
+
+    var wantsJump = Inputs.JumpPressed;
+    if (wantsJump)
     {
-      var axis = Inputs.Axis;
-
-      binding.ApplyVelocity(new Vec2(
-        X: axis.X * 200f,
-        Y: axis.Y * 200f
-      ));
+      jump.BufferRemaining = JumpBuffer;
     }
-    else
+
+    var targetVX = axisX * MoveSpeed;
+
+    var currentVX = body.Velocity.X;
+    var newVX = MathF.Abs(targetVX) > 0.01f
+      ? MoveTowards(currentVX, targetVX, Acceleration * dt)
+      : MoveTowards(currentVX, 0f, Friction * dt);
+
+    var newVY = body.Velocity.Y;
+
+    if (binding.IsOnFloor())
     {
-
-      var decayVector = new Vec2(
-        X: body.Velocity.X * MathF.Min(1f, (float)delta * 7f),
-        Y: body.Velocity.Y * MathF.Min(1f, (float)delta * 7f)
-      );
-
-      binding.ApplyVelocity(new Vec2(
-        X: body.Velocity.X - decayVector.X,
-        Y: body.Velocity.Y - decayVector.Y
-      ));
+      jump.CoyoteRemaining = CoyoteTime;
     }
+
+    var canJump = (binding.IsOnFloor() || jump.CoyoteRemaining > 0f) && jump.BufferRemaining > 0f;
+    if (canJump)
+    {
+      newVY = JumpVelocity;
+      jump.CoyoteRemaining = 0f;
+      jump.BufferRemaining = 0f;
+    }
+
+    binding.ApplyVelocity(new Vec2(newVX, newVY));
+  }
+
+  public void UpdateAxisY(double delta, Body body, IBinding binding)
+  {
+    var dt = (float)delta;
+    binding.ApplyAxisY(MoveTowards(body.Velocity.Y, 0f, Friction * dt));
+  }
+
+  private static float MoveTowards(float current, float target, float maxDelta)
+  {
+    var diff = target - current;
+    if (MathF.Abs(diff) <= maxDelta)
+    {
+      return target;
+    }
+    return current + MathF.Sign(diff) * maxDelta;
   }
 }
