@@ -6,17 +6,17 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_mkf8s"]
 radius = 8.0
 
-[node name="Bullet" type="Area2D" unique_id=632499341 node_paths=PackedStringArray("SpriteNode")]
+[node name="Bullet" type="Area2D" node_paths=PackedStringArray("SpriteNode")]
 script = ExtResource("1_y25gk")
 SpriteNode = NodePath("Sprite")
-collision_layer = 4
-collision_mask = 8
+collision_layer = 8
+collision_mask = 6
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1600593184]
+[node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0.37254903, 1)
 position = Vector2(-8, 0)
 scale = Vector2(0.078125015, 0.078125015)
 texture = ExtResource("1_mkf8s")
 
-[node name="Collider" type="CollisionShape2D" parent="." unique_id=1048862051]
+[node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_mkf8s")

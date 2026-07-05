@@ -10,7 +10,14 @@ public class GodotSpawnBullet(
   Node OriginNode
 ) : IBulletSpawn
 {
-  public void SpawnBullet(Vec2 origin, Vec2 direction, float speed, float lifetime)
+  public void SpawnBullet(
+    Vec2 origin,
+    Vec2 direction,
+    float speed,
+    float lifetime,
+    int damage = 0,
+    string sourceTag = "player"
+  )
   {
     var bullet = BulletScene.Instantiate<BulletEntity>();
     bullet.GlobalPosition = new Vector2(
@@ -22,6 +29,8 @@ public class GodotSpawnBullet(
       y: (float)direction.Y
     ) * speed;
     bullet.LifetimeRemaining = lifetime;
+    bullet.Damage = damage;
+    bullet.SourceTag = sourceTag;
     bullet.Rotation = Mathf.Atan2((float)direction.Y, (float)direction.X);
 
     OriginNode.AddChild(bullet);

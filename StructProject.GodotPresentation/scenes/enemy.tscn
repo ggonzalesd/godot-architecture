@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cx5w6k7n8q3d4"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Enemy.cs" id="1_enscr"]
+[ext_resource type="Texture2D" uid="uid://cm1q7cbw886cy" path="res://assets/player-body.svg" id="2_enspt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_en"]
+radius = 22.0
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_enscr")
+VisualPath = NodePath("Visual")
+BodyAreaPath = NodePath("BodyArea")
+
+[node name="Visual" type="Sprite2D" parent="."]
+modulate = Color(1, 0.6, 0.6, 1)
+scale = Vector2(0.085, 0.085)
+texture = ExtResource("2_enspt")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_en")
+
+[node name="BodyArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitorable = true
+monitoring = false
+
+[node name="AreaShape" type="CollisionShape2D" parent="BodyArea"]
+shape = SubResource("CircleShape2D_en")
+
+[node name="HitDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+monitoring = true
+
+[node name="DetectorShape" type="CollisionShape2D" parent="HitDetector"]
+shape = SubResource("CircleShape2D_en")

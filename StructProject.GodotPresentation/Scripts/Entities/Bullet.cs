@@ -2,6 +2,7 @@ namespace StructProject.GodotPresentation.Scripts.Entities;
 
 using Godot;
 using System;
+using StructProject.GodotPresentation.Scripts.Containers;
 
 public partial class Bullet : Area2D
 {
@@ -36,6 +37,20 @@ public partial class Bullet : Area2D
   private void OnAreaEntered(Area2D area)
   {
     if (area == this) return;
-    QueueFree();
+    var parent = area.GetParent();
+
+    if (SourceTag == "player" && parent is Enemy enemy)
+    {
+      enemy.ApplyDamage(Damage);
+      QueueFree();
+      return;
+    }
+
+    if (SourceTag == "enemy" && parent is Player)
+    {
+      BaseContainer.Instance.TryDamagePlayer(Damage);
+      QueueFree();
+      return;
+    }
   }
 }

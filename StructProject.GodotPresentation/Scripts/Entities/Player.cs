@@ -4,9 +4,8 @@ using PlayerShooter = StructProject.Core.Entities.Player.Shooter;
 using PlayerBinding = StructProject.Core.Entities.Player.IBinding;
 using JumpStateT = StructProject.Core.Entities.Player.JumpState;
 using StructProject.Core.Shared.Models;
-using StructProject.GodotPresentation.Scripts.Containers;
-using CorePosition = StructProject.Core.Shared.Models.Vec2;
 using StructProject.GodotPresentation.Scripts.Adapters.Players;
+using StructProject.GodotPresentation.Scripts.Containers;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
 
@@ -18,6 +17,8 @@ public partial class Player : CharacterBody2D
   private Node2D CannotPivot { get; set; } = null!;
   [Export]
   private Node2D SpawnPoint { get; set; } = null!;
+  [Export]
+  private Area2D HurtArea { get; set; } = null!;
 
   private PlayerBody PlayerBody = null!;
   private PlayerShooter PlayerShooter = null!;
@@ -32,33 +33,38 @@ public partial class Player : CharacterBody2D
 
   public override void _Ready()
   {
-    PlayerBinding = new GodotPlayerBinding(
-      body: this,
-      spawnPoint: SpawnPoint
-    );
+    CallDeferred(MethodName.InitializePlayer);
+  }
+
+  private void InitializePlayer()
+  {
+    PlayerBinding = new GodotPlayerBinding(this, SpawnPoint);
 
     PlayerBody = new PlayerBody(
-      Position: new CorePosition(X: GlobalPosition.X, Y: GlobalPosition.Y),
-      Velocity: new CorePosition(X: Velocity.X, Y: Velocity.Y)
+      Position: new Vec2(GlobalPosition.X, GlobalPosition.Y),
+      Velocity: new Vec2(Velocity.X, Velocity.Y)
     );
 
     PlayerShooter = new PlayerShooter(
       Speed: BulletSpeed,
       Ratio: BulletRatio,
-      Aim: CorePosition.Zero
+      Aim: Vec2.Zero
     );
 
     Jump = new JumpStateT();
+    BaseContainer.Instance.BindPlayer(PlayerBinding);
   }
 
   public override void _PhysicsProcess(double delta)
   {
+    if (PlayerBinding == null) return;
+
     var currentVelocity = Velocity;
 
     PlayerBody = PlayerBody with
     {
-      Position = new CorePosition(X: GlobalPosition.X, Y: GlobalPosition.Y),
-      Velocity = new CorePosition(X: currentVelocity.X, Y: currentVelocity.Y)
+      Position = new Vec2(GlobalPosition.X, GlobalPosition.Y),
+      Velocity = new Vec2(currentVelocity.X, currentVelocity.Y)
     };
 
     PlayerShooter = PlayerShooter with
@@ -68,19 +74,25 @@ public partial class Player : CharacterBody2D
     };
 
     BaseContainer.Instance.PlayerBodyLogic.Update(
-      delta: delta,
-      body: PlayerBody,
-      binding: PlayerBinding,
-      jump: Jump
+      delta,
+      PlayerBody,
+      PlayerBinding,
+      Jump
     );
 
     var aim = BaseContainer.Instance.Shooting.Update(
-      delta: delta,
-      body: PlayerBody,
-      shooter: PlayerShooter,
-      binding: PlayerBinding
+      delta,
+      PlayerBody,
+      PlayerShooter,
+      PlayerBinding
     );
 
     CannotPivot.Rotation = Mathf.Atan2(aim.Y, aim.X);
+
+    if (BaseContainer.Instance.Player.IsDead)
+    {
+      Visible = false;
+      SetPhysicsProcess(false);
+    }
   }
 }
