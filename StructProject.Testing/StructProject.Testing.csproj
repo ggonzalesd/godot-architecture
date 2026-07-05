@@ -1,0 +1,15 @@
+<Project Sdk="Godot.NET.Sdk/4.6.1">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>StructProject.Testing</RootNamespace>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StructProject.Core\StructProject.Core.csproj" />
+    <ProjectReference Include="..\StructProject.Database\StructProject.Database.csproj" />
+    <ProjectReference Include="..\StructProject.Infrastructure\StructProject.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
