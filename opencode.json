@@ -1,9 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": {
-    "csharp": {
-      "extensions": [".cs", ".csx"]
-    },
     "fsharp": {
       "disabled": true
     }
