@@ -4,32 +4,65 @@
 [ext_resource type="PackedScene" uid="uid://bid182n8arlss" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://bdtfymrwpt6pa" path="res://scenes/bullet.tscn" id="2_sugp2"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(2400, 60)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o5qli"]
-size = Vector2(741, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(60, 1200)
 
 [node name="Main" type="Node2D" unique_id=983973646]
 script = ExtResource("1_0wfyh")
 BulletScene = ExtResource("2_sugp2")
 
+[node name="WorldBoundary" type="StaticBody2D" parent="." unique_id=1936585100]
+position = Vector2(0, 540)
+collision_layer = 2
+collision_mask = 0
+
+[node name="FloorCollision" type="CollisionShape2D" parent="WorldBoundary" unique_id=1936585101]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1936585102]
+position = Vector2(-1230, 0)
+collision_layer = 2
+collision_mask = 0
+
+[node name="WallLeftCollision" type="CollisionShape2D" parent="WallLeft" unique_id=1936585103]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=1936585104]
+position = Vector2(1230, 0)
+collision_layer = 2
+collision_mask = 0
+
+[node name="WallRightCollision" type="CollisionShape2D" parent="WallRight" unique_id=1936585105]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Floor" type="ColorRect" parent="." unique_id=149778501]
+offset_left = -1200.0
+offset_top = 540.0
+offset_right = 1200.0
+offset_bottom = 600.0
+color = Color(0.2, 0.4, 0.25, 1)
+
+[node name="WallLeftVisual" type="ColorRect" parent="." unique_id=149778502]
+offset_left = -1260.0
+offset_top = -600.0
+offset_right = -1200.0
+offset_bottom = 600.0
+color = Color(0.15, 0.15, 0.2, 1)
+
+[node name="WallRightVisual" type="ColorRect" parent="." unique_id=149778503]
+offset_left = 1200.0
+offset_top = -600.0
+offset_right = 1260.0
+offset_bottom = 600.0
+color = Color(0.15, 0.15, 0.2, 1)
+
 [node name="Player" parent="." unique_id=186498483 instance=ExtResource("1_o5qli")]
+position = Vector2(-200, 300)
 BulletSpeed = 900.0
-BulletRatio = 29.535
+BulletRatio = 8.0
 
 [node name="Camera" type="Camera2D" parent="Player" unique_id=137459988]
 position_smoothing_enabled = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1936585105]
-position = Vector2(-4, 315)
-physics_material_override = SubResource("PhysicsMaterial_o5qli")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1849710021]
-position = Vector2(2, 8)
-shape = SubResource("RectangleShape2D_o5qli")
-
-[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=149778505]
-offset_left = -367.0
-offset_top = -5.0
-offset_right = 376.0
-offset_bottom = 35.0
