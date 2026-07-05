@@ -4,10 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://cm1q7cbw886cy" path="res://assets/player-body.svg" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://b2blgjdf1nd38" path="res://assets/player-cannon.svg" id="3_qhqgy"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
+friction = 0.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 24.0
 
 [node name="Player" type="RigidBody2D" unique_id=606596164 node_paths=PackedStringArray("CannotPivot")]
+physics_material_override = SubResource("PhysicsMaterial_qhqgy")
+lock_rotation = true
 script = ExtResource("1_3vyb7")
 CannotPivot = NodePath("CannonPivot")
 

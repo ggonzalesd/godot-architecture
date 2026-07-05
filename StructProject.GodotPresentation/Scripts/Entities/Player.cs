@@ -1,8 +1,6 @@
 using Godot;
-using StructProject.Core.Entities.Logic;
+using StructProject.Core.Entities.Models;
 using StructProject.GodotPresentation.Scripts.Containers;
-using StructProject.GodotPresentation.Scripts.Adapters;
-using CorePlayer = StructProject.Core.Entities.Models.Player;
 using CorePosition = StructProject.Core.Shared.Models.Vec2;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
@@ -12,15 +10,11 @@ public partial class Player : RigidBody2D
   [Export]
   private Node2D CannotPivot { get; set; } = null!;
 
-  [Export]
-  private float speed = 100f;
-
-  private CorePlayer _player = null!;
-  private PlayerLoopLogic _playerLoopLogic = null!;
+  private PlayerBody _body = null!;
 
   public override void _Ready()
   {
-    _player = new CorePlayer(
+    _body = new PlayerBody(
       GetPosition: () => new CorePosition(
         X: Position.X,
         Y: Position.Y
@@ -37,18 +31,16 @@ public partial class Player : RigidBody2D
         y: velocity.Y
       )
     );
-
-    _playerLoopLogic = new PlayerLoopLogic(
-      Player: _player,
-      Logger: BaseContainer.Instance.Logger,
-      Inputs: BaseContainer.Instance.Inputs
-    );
   }
 
   public override void _Process(double delta)
   {
-    _playerLoopLogic.Update(delta);
+    BaseContainer.Instance.PlayerLoopLogic.Update(
+      delta: delta,
+      body: _body
+    );
 
-    CannotPivot.Rotate(Mathf.DegToRad(speed * (float)delta));
+    var aim = BaseContainer.Instance.PlayerLoopLogic.AimingDirection;
+    CannotPivot.Rotation = Mathf.Atan2(aim.Y, aim.X);
   }
 }

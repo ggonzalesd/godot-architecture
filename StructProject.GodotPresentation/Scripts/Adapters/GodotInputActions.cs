@@ -12,10 +12,11 @@ public class GodotInputActionsAdapter(Viewport viewport) : IInputActions
   {
     get
     {
-      var mousePosition = viewport.GetMousePosition();
+      var screen = viewport.GetMousePosition();
+      var world = viewport.GetCanvasTransform().AffineInverse() * screen;
       return new Vec2(
-        X: mousePosition.X,
-        Y: mousePosition.Y
+        X: world.X,
+        Y: world.Y
       );
     }
   }
