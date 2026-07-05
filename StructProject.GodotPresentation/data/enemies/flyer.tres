@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="EnemyKindConfig" format=3]
 
 [ext_resource type="Script" path="res://Scripts/Data/EnemyKindConfig.cs" id="1_flyer"]
+[ext_resource type="Resource" path="res://data/pickups/drops-elite.tres" id="2_dt"]
 
 [resource]
 script = ExtResource("1_flyer")
@@ -18,4 +19,5 @@ ShootCooldown = 2.4
 ShootSpeed = 420.0
 ShootRange = 18.0
 ShootDamage = 6
+DropTable = ExtResource("2_dt")
 metadata/_custom_type_script = "res://Scripts/Data/EnemyKindConfig.cs"

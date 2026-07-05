@@ -8,12 +8,13 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
 radius = 24.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CannotPivot", "SpawnPoint", "HurtArea")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("CannotPivot", "SpawnPoint", "HurtArea", "PickupArea")]
 script = ExtResource("1_3vyb7")
 CannotPivot = NodePath("CannonPivot")
 SpawnPoint = NodePath("CannonPivot/SpawnPoint")
 BulletScene = ExtResource("2_dqkch")
 HurtArea = NodePath("HurtArea")
+PickupArea = NodePath("PickupArea")
 collision_layer = 2
 collision_mask = 1
 
@@ -42,4 +43,13 @@ monitorable = true
 monitoring = false
 
 [node name="HurtShape" type="CollisionShape2D" parent="HurtArea"]
+shape = SubResource("CircleShape2D_g2els")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+monitoring = true
+
+[node name="PickupShape" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_g2els")

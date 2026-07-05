@@ -52,6 +52,9 @@ public partial class EnemyKindConfig : Resource
   [Export(PropertyHint.Range, "1,100,1")]
   public int ShootDamage { get; set; } = 8;
 
+  [Export]
+  public DropTableConfig? DropTable { get; set; }
+
   public EnemyKindSnapshot ToSnapshot() => new(
     Kind,
     DisplayName,

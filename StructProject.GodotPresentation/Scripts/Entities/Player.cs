@@ -6,6 +6,7 @@ using JumpStateT = StructProject.Core.Entities.Player.JumpState;
 using StructProject.Core.Shared.Models;
 using StructProject.GodotPresentation.Scripts.Adapters.Players;
 using StructProject.GodotPresentation.Scripts.Containers;
+using PickupEntity = StructProject.GodotPresentation.Scripts.Entities.Pickup;
 
 namespace StructProject.GodotPresentation.Scripts.Entities;
 
@@ -19,6 +20,8 @@ public partial class Player : CharacterBody2D
   private Node2D SpawnPoint { get; set; } = null!;
   [Export]
   private Area2D HurtArea { get; set; } = null!;
+  [Export]
+  private Area2D PickupArea { get; set; } = null!;
 
   private PlayerBody PlayerBody = null!;
   private PlayerShooter PlayerShooter = null!;
@@ -52,6 +55,9 @@ public partial class Player : CharacterBody2D
     );
 
     Jump = new JumpStateT();
+
+    PickupArea.AreaEntered += OnPickupAreaEntered;
+
     BaseContainer.Instance.BindPlayer(PlayerBinding);
   }
 
@@ -67,10 +73,11 @@ public partial class Player : CharacterBody2D
       Velocity = new Vec2(currentVelocity.X, currentVelocity.Y)
     };
 
+    var powerUp = BaseContainer.Instance.PowerUp;
     PlayerShooter = PlayerShooter with
     {
       Speed = BulletSpeed,
-      Ratio = BulletRatio
+      Ratio = BulletRatio * powerUp.ActiveFireRateMultiplier
     };
 
     BaseContainer.Instance.PlayerBodyLogic.Update(
@@ -93,6 +100,15 @@ public partial class Player : CharacterBody2D
     {
       Visible = false;
       SetPhysicsProcess(false);
+    }
+  }
+
+  private void OnPickupAreaEntered(Area2D area)
+  {
+    if (area is PickupEntity pickup)
+    {
+      BaseContainer.Instance.CollectPickup(pickup);
+      pickup.QueueFree();
     }
   }
 }

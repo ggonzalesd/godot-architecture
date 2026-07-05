@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bpickupbase01"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Pickup.cs" id="1_pkscr"]
+[ext_resource type="Texture2D" uid="uid://b2blgjdf1nd38" path="res://assets/player-cannon.svg" id="2_pktex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pk"]
+radius = 14.0
+
+[node name="Pickup" type="Area2D"]
+collision_layer = 16
+collision_mask = 2
+monitorable = true
+monitoring = false
+script = ExtResource("1_pkscr")
+Visual = NodePath("Sprite")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 0.85, 0.2, 1)
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("2_pktex")
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pk")

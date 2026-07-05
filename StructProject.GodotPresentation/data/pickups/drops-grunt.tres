@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="DropTableConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/DropTableConfig.cs" id="1_dts"]
+[ext_resource type="Script" path="res://Scripts/Data/DropEntryResource.cs" id="2_der"]
+
+[sub_resource type="Resource" id="Der_coin"]
+script = ExtResource("2_der")
+Kind = 0
+Weight = 0.7
+
+[sub_resource type="Resource" id="Der_health"]
+script = ExtResource("2_der")
+Kind = 1
+Weight = 0.2
+
+[sub_resource type="Resource" id="Der_shield"]
+script = ExtResource("2_der")
+Kind = 2
+Weight = 0.05
+
+[sub_resource type="Resource" id="Der_speed"]
+script = ExtResource("2_der")
+Kind = 5
+Weight = 0.05
+
+[resource]
+script = ExtResource("1_dts")
+Entries = Array[Resource]([SubResource("Der_coin"), SubResource("Der_health"), SubResource("Der_shield"), SubResource("Der_speed")])
+metadata/_custom_type_script = "res://Scripts/Data/DropTableConfig.cs"

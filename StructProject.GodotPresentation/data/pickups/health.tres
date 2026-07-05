@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PickupConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/PickupConfig.cs" id="1_pkcfg"]
+
+[resource]
+script = ExtResource("1_pkcfg")
+Kind = 1
+DisplayName = "Health"
+Duration = 0.0
+Amount = 1
+TintColor = Color(1, 0.3, 0.3, 1)
+Scale = Vector2(0.08, 0.08)
+metadata/_custom_type_script = "res://Scripts/Data/PickupConfig.cs"

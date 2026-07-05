@@ -17,6 +17,11 @@ public class EnemyRegistryLogic
 
   public IReadOnlyCollection<EnemySpawnEvent> Active => _active.Values;
 
+  public EnemySpawnEvent? Get(int id)
+  {
+    return _active.TryGetValue(id, out var e) ? e : null;
+  }
+
   public void Unregister(int id)
   {
     _active.Remove(id);

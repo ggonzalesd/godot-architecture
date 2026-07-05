@@ -4,13 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://bid182n8arlss" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://bdtfymrwpt6pa" path="res://scenes/bullet.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cx5w6k7n8q3d4" path="res://scenes/enemy.tscn" id="3_enemy"]
-
-
-
+[ext_resource type="PackedScene" uid="uid://bpickupbase01" path="res://scenes/pickup.tscn" id="4_pickup"]
 [ext_resource type="Resource" path="res://data/enemies/grunt.tres" id="4_grunt"]
 [ext_resource type="Resource" path="res://data/enemies/shooter.tres" id="5_shooter"]
 [ext_resource type="Resource" path="res://data/enemies/tank.tres" id="6_tank"]
 [ext_resource type="Resource" path="res://data/enemies/flyer.tres" id="7_flyer"]
+[ext_resource type="Resource" path="res://data/pickups/coin.tres" id="10_coin"]
+[ext_resource type="Resource" path="res://data/pickups/health.tres" id="11_hp"]
+[ext_resource type="Resource" path="res://data/pickups/shield.tres" id="12_shield"]
+[ext_resource type="Resource" path="res://data/pickups/damage-up.tres" id="13_dmg"]
+[ext_resource type="Resource" path="res://data/pickups/fire-rate-up.tres" id="14_fr"]
+[ext_resource type="Resource" path="res://data/pickups/speed-up.tres" id="15_spd"]
+[ext_resource type="Resource" path="res://data/pickups/magnet.tres" id="16_mag"]
 [ext_resource type="Resource" path="res://data/waves/sequence-default.tres" id="8_sequence"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
@@ -23,7 +28,9 @@ size = Vector2(60, 1200)
 script = ExtResource("1_0wfyh")
 BulletScene = ExtResource("2_sugp2")
 EnemyScene = ExtResource("3_enemy")
+PickupScene = ExtResource("4_pickup")
 EnemyKinds = Array[Resource]([ExtResource("4_grunt"), ExtResource("5_shooter"), ExtResource("6_tank"), ExtResource("7_flyer")])
+PickupKinds = Array[Resource]([ExtResource("10_coin"), ExtResource("11_hp"), ExtResource("12_shield"), ExtResource("13_dmg"), ExtResource("14_fr"), ExtResource("15_spd"), ExtResource("16_mag")])
 StartingWaveSequence = ExtResource("8_sequence")
 
 [node name="WorldBoundary" type="StaticBody2D" parent="."]
