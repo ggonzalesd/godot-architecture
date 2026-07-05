@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/SkillConfig.cs" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+Kind = 2
+DisplayName = "Slow Motion"
+Cooldown = 20.0
+Duration = 4.0
+Power = 0.6
+Cost = 0
+TintColor = Color(0.6, 0.7, 1, 1)
+metadata/_custom_type_script = "res://Scripts/Data/SkillConfig.cs"

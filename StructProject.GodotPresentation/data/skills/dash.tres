@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SkillConfig" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Data/SkillConfig.cs" id="1_sk"]
+
+[resource]
+script = ExtResource("1_sk")
+Kind = 0
+DisplayName = "Dash"
+Cooldown = 3.0
+Duration = 0.2
+Power = 720.0
+Cost = 0
+TintColor = Color(0.6, 0.9, 1, 1)
+metadata/_custom_type_script = "res://Scripts/Data/SkillConfig.cs"

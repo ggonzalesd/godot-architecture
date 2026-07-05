@@ -17,6 +17,9 @@
 [ext_resource type="Resource" path="res://data/pickups/speed-up.tres" id="15_spd"]
 [ext_resource type="Resource" path="res://data/pickups/magnet.tres" id="16_mag"]
 [ext_resource type="Resource" path="res://data/waves/sequence-default.tres" id="8_sequence"]
+[ext_resource type="Resource" path="res://data/skills/dash.tres" id="20_dash"]
+[ext_resource type="Resource" path="res://data/skills/bomb.tres" id="21_bomb"]
+[ext_resource type="Resource" path="res://data/skills/slow.tres" id="22_slow"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(2400, 60)
@@ -31,6 +34,7 @@ EnemyScene = ExtResource("3_enemy")
 PickupScene = ExtResource("4_pickup")
 EnemyKinds = Array[Resource]([ExtResource("4_grunt"), ExtResource("5_shooter"), ExtResource("6_tank"), ExtResource("7_flyer")])
 PickupKinds = Array[Resource]([ExtResource("10_coin"), ExtResource("11_hp"), ExtResource("12_shield"), ExtResource("13_dmg"), ExtResource("14_fr"), ExtResource("15_spd"), ExtResource("16_mag")])
+Skills = Array[Resource]([ExtResource("20_dash"), ExtResource("21_bomb"), ExtResource("22_slow")])
 StartingWaveSequence = ExtResource("8_sequence")
 
 [node name="WorldBoundary" type="StaticBody2D" parent="."]

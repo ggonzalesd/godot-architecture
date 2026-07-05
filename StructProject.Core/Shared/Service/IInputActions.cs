@@ -8,6 +8,9 @@ public interface IInputActions
   public bool MovementPressed { get; }
   public bool JumpPressed { get; }
   public bool CrouchPressed { get; }
+  public bool DashPressed { get; }
+  public bool BombPressed { get; }
+  public bool SlowPressed { get; }
   public Vec2 Axis { get; }
 
   public Vec2 CursorPosition { get; }

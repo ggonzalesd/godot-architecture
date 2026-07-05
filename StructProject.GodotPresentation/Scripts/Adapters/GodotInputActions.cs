@@ -46,4 +46,10 @@ public class GodotInputActionsAdapter(Viewport viewport) : IInputActions
   public bool JumpPressed => Input.IsActionJustPressed("jump");
 
   public bool CrouchPressed => Input.IsActionPressed("crouch");
+
+  public bool DashPressed => Input.IsActionJustPressed("skill_dash");
+
+  public bool BombPressed => Input.IsActionJustPressed("skill_bomb");
+
+  public bool SlowPressed => Input.IsActionJustPressed("skill_slow");
 }

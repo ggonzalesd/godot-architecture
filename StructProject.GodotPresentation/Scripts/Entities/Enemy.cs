@@ -29,6 +29,7 @@ public partial class Enemy : CharacterBody2D
     VisualNode = GetNode<Sprite2D>(VisualPath);
     BodyArea = GetNode<Area2D>(BodyAreaPath);
     BodyArea.AreaEntered += OnAreaEntered;
+    AddToGroup("enemies");
   }
 
   public void Initialize(int instanceId, EnemyInstanceT instance)

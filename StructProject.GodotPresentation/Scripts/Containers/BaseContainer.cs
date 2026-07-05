@@ -3,9 +3,11 @@ using Godot;
 using Microsoft.EntityFrameworkCore;
 using StructProject.Core.Entities.Enemies;
 using StructProject.Core.Entities.Pickups;
+using StructProject.Core.Entities.Skills;
 using StructProject.Core.Logic.Enemies;
 using StructProject.Core.Logic.Pickups;
 using StructProject.Core.Logic.Player;
+using StructProject.Core.Logic.Skills;
 using StructProject.Core.Logic.Spawn;
 using StructProject.Core.Logic.Waves;
 using StructProject.Core.Shared.Service;
@@ -39,6 +41,9 @@ public partial class BaseContainer : Node
   public Godot.Collections.Array<PickupConfig> PickupKinds { get; private set; } = [];
 
   [Export]
+  public Godot.Collections.Array<SkillConfig> Skills { get; private set; } = [];
+
+  [Export]
   public Resource? StartingWaveSequence { get; private set; }
 
   public ILogger Logger { get; private set; } = null!;
@@ -61,10 +66,13 @@ public partial class BaseContainer : Node
 
   public EnemyKindRegistry EnemyKindRegistry { get; private set; } = null!;
   public PickupRegistry PickupRegistry { get; private set; } = null!;
+  public SkillRegistry SkillRegistry { get; private set; } = null!;
+  public SkillsLogic SkillsLogic { get; } = new();
 
   public PlayerState Player { get; private set; } = null!;
   public PowerUpState PowerUp { get; private set; } = PowerUpState.Empty;
   public InventoryState Inventory { get; private set; } = new InventoryState(0);
+  public PlayerSkillsState SkillsState { get; private set; } = new(new Dictionary<SkillKind, SkillSlotState>(), 1f);
 
   public StructProject.Core.Entities.Player.IBinding? PlayerBinding { get; private set; }
 
@@ -76,6 +84,7 @@ public partial class BaseContainer : Node
   public event System.Action<int>? OnCoinsChanged;
   public event System.Action? OnPlayerDied;
   public event System.Action<int, int, int>? OnEnemyKilledEvent;
+  public event System.Action<PlayerSkillsState>? OnSkillsStateChanged;
 
   private static BaseContainer? _instance;
   public static BaseContainer Instance => _instance ?? throw new System.InvalidOperationException("BaseContainer not initialized.");
@@ -103,6 +112,10 @@ public partial class BaseContainer : Node
     PickupRegistry = new PickupRegistry();
     PickupRegistry.RegisterRange(PickupKinds);
 
+    SkillRegistry = new SkillRegistry();
+    SkillRegistry.RegisterRange(Skills);
+    InitializeSkills();
+
     WaveController = new WaveControllerLogic(Logger);
     WaveController.OnWaveStarted += (idx, _) => OnWaveIndexChanged?.Invoke(idx + 1);
     WaveController.OnEnemySpawn += HandleEnemySpawn;
@@ -128,6 +141,40 @@ public partial class BaseContainer : Node
   {
     WaveController?.Update(delta);
     PowerUp = PowerUpLogic.Update(PowerUp, delta);
+
+    if (Inputs.DashPressed) TryTriggerSkill(SkillKind.Dash);
+    if (Inputs.BombPressed) TryTriggerSkill(SkillKind.Bomb);
+    if (Inputs.SlowPressed) TryTriggerSkill(SkillKind.SlowMotion);
+
+    var prev = SkillsState;
+    SkillsState = SkillsLogic.Update(SkillsState, delta, SkillRegistry.ToSnapshotDictionary());
+    if (!ReferenceEquals(prev, SkillsState))
+    {
+      Engine.TimeScale = SkillsState.TimeScale;
+      OnSkillsStateChanged?.Invoke(SkillsState);
+    }
+  }
+
+  private void InitializeSkills()
+  {
+    var slots = new Dictionary<SkillKind, SkillSlotState>();
+    foreach (var kind in System.Enum.GetValues<SkillKind>())
+    {
+      slots[kind] = new SkillSlotState(kind, 0f, 0f, false);
+    }
+    SkillsState = new PlayerSkillsState(slots, 1f);
+  }
+
+  public void TryTriggerSkill(SkillKind kind)
+  {
+    SkillsState = SkillsLogic.Trigger(SkillsState, kind, SkillRegistry.ToSnapshotDictionary());
+    OnSkillsStateChanged?.Invoke(SkillsState);
+  }
+
+  public void ConsumeSkillTrigger(SkillKind kind)
+  {
+    SkillsState = SkillsLogic.ConsumeTrigger(SkillsState, kind);
+    OnSkillsStateChanged?.Invoke(SkillsState);
   }
 
   public void BindPlayer(StructProject.Core.Entities.Player.IBinding binding)
